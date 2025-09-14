@@ -16,7 +16,7 @@ const SignupForm: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    role: 'CANDIDATE',
+    role: 'ADMIN',
   });
 
   const navigate = useNavigate();
@@ -143,7 +143,7 @@ const SignupForm: React.FC = () => {
             disabled={signupMutation.isPending}
           >
             <option value="ADMIN">Admin</option>
-            <option value="REVIEWER">Reviewer</option>
+            <option value="CANDIDATE">Candidate</option>
           </select>
         </div>
 

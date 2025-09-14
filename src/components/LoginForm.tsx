@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getLogin } from '../api/auth';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface LoginFormData {
   email: string;
@@ -27,8 +28,16 @@ const LoginForm: React.FC = () => {
   const loginMutation = useMutation({
     mutationFn: (formData: LoginFormData) => getLogin(formData),
     onSuccess: (data) => {
-      localStorage.setItem('accessToken', data.data.accessToken);
-      navigate('/dashboard');
+      if (data.status === 200) {
+        localStorage.setItem('accessToken', data.data.accessToken);
+        toast.success("Logged in Successfully")
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 1000)
+      } else {
+        toast.error(data.data.error)
+      }
+
     },
     onError: (err: any) => {
       console.error('Login failed', err);
@@ -85,8 +94,8 @@ const LoginForm: React.FC = () => {
           type="submit"
           disabled={loginMutation.isPending}
           className={`w-full text-white py-2 px-4 rounded-md transition-colors ${loginMutation.isPending
-              ? 'bg-green-400 cursor-not-allowed'
-              : 'bg-green-600 hover:bg-green-700'
+            ? 'bg-green-400 cursor-not-allowed'
+            : 'bg-green-600 hover:bg-green-700'
             }`}
         >
           {loginMutation.isPending ? 'Logging in...' : 'Login'}
@@ -94,11 +103,12 @@ const LoginForm: React.FC = () => {
 
         <p className="text-sm text-gray-600 text-center mt-4">
           Don't have an account?{' '}
-          <Link to="/sighup" className="text-blue-600 hover:underline">
-            Sighup
+          <Link to="/signup" className="text-blue-600 hover:underline">
+            Signup
           </Link>
         </p>
       </form>
+      <Toaster />
     </div>
   );
 };
