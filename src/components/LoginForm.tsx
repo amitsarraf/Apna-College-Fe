@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getLogin } from '../api/auth';
 
 interface LoginFormData {
@@ -85,12 +85,19 @@ const LoginForm: React.FC = () => {
           type="submit"
           disabled={loginMutation.isPending}
           className={`w-full text-white py-2 px-4 rounded-md transition-colors ${loginMutation.isPending
-              ? 'bg-blue-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700'
+              ? 'bg-green-400 cursor-not-allowed'
+              : 'bg-green-600 hover:bg-green-700'
             }`}
         >
           {loginMutation.isPending ? 'Logging in...' : 'Login'}
         </button>
+
+        <p className="text-sm text-gray-600 text-center mt-4">
+          Don't have an account?{' '}
+          <Link to="/sighup" className="text-blue-600 hover:underline">
+            Sighup
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -4,19 +4,38 @@ import LoginForm from './components/LoginForm';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
-import Profile from './pages/Profile';
-import Topics from './pages/Topics';
-import Progress from './pages/Progress';
+import SignupForm from './components/SignupForm';
+import HomePage from './pages/Home';
+//import CandidateDashboard from './pages/Candidate/CandidateDashboard';
+import ReviewerDashboard from './pages/Reviewer/ReviewerDashboard';
+import CandidateDashboard from './pages/Candidate/CandidateDashboard';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route
+          <Route
           path="/"
           element={
             <PublicRoute>
+              <HomePage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
               <LoginForm />
+            </PublicRoute>
+          }
+        />
+
+         <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <SignupForm />
             </PublicRoute>
           }
         />
@@ -29,27 +48,19 @@ const App: React.FC = () => {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/profile"
+         <Route
+          path="/candidatedashboard"
           element={
             <PrivateRoute>
-              <Profile />
+              <CandidateDashboard />
             </PrivateRoute>
           }
         />
-        <Route
-          path="/topics"
+         <Route
+          path="/reviewerDashboard"
           element={
             <PrivateRoute>
-              <Topics />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/progress"
-          element={
-            <PrivateRoute>
-              <Progress />
+              <ReviewerDashboard />
             </PrivateRoute>
           }
         />
